@@ -1,0 +1,642 @@
+Here’s the complete `index.html` code. Copy it into a file named `index.html` in VS Code.
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f5f0">
+<title>Quizly — Learn by doing</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--ink:#202820;--muted:#778077;--green:#47795c;--green2:#e7f0e8;--cream:#f7f5f0;--line:#e8e6df;--white:#fff;--coral:#ed8b70;--shadow:0 12px 36px #1823180c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font:15px 'DM Sans',sans-serif;min-height:100vh}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.shell{max-width:1180px;margin:auto;padding:0 38px}
+.topbar{height:78px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:11px;font:800 22px Manrope,sans-serif;letter-spacing:-.8px}
+.logo{width:35px;height:35px;border-radius:12px;background:var(--green);color:white;display:grid;place-items:center;font-size:20px}
+.brand em{font-style:normal;color:var(--green)}
+.topright{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px}
+.dot{width:8px;height:8px;border-radius:50%;background:#72a77a;box-shadow:0 0 0 4px #72a77a20}
+.hero{padding:45px 0 30px;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:30px;background:#e9eee6;color:#56725b;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.hero h1{font:800 clamp(34px,5vw,52px)/1.12 Manrope,sans-serif;letter-spacing:-2.1px;margin:16px 0 10px}
+.hero h1 span{color:var(--green)}
+.hero p{margin:0;color:var(--muted);font-size:16px}
+.workspace{display:grid;grid-template-columns:350px 1fr;gap:22px;align-items:start;padding-bottom:48px}
+.panel,.quizpanel{background:white;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.panel{padding:24px;position:sticky;top:18px}
+.panel h2{font:700 16px Manrope,sans-serif;margin:0 0 5px}
+.sub{font-size:13px;color:var(--muted);line-height:1.5;margin:0 0 20px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;padding:4px;background:#f3f3ef;border-radius:10px;margin-bottom:18px}
+.tab{border:0;border-radius:7px;padding:9px;background:transparent;color:#777;font-size:13px;font-weight:600}
+.tab.active{background:#fff;color:var(--ink);box-shadow:0 1px 5px #00000012}
+.fieldlabel{display:block;font-size:12px;font-weight:700;margin:0 0 8px}
+.topicbox,.notesbox{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px 13px;outline:0;background:white;color:var(--ink);transition:.2s}
+.topicbox:focus,.notesbox:focus{border-color:#7aa184;box-shadow:0 0 0 3px #47795c16}
+.topicbox{height:46px}
+.notesbox{min-height:150px;resize:vertical;font-size:13px;line-height:1.55}
+.hint{color:#999;font-size:11px;line-height:1.5;margin:7px 0 16px}
+.drop{border:1px dashed #d9ddd5;background:#fafbf8;border-radius:10px;padding:17px;text-align:center;color:#777;font-size:12px;cursor:pointer;transition:.2s}
+.drop:hover,.drop.drag{border-color:var(--green);background:#f2f7f1}
+.drop strong{display:block;color:var(--ink);font-size:13px;margin-bottom:4px}
+.drop .uploadicon{font-size:20px;margin-bottom:6px}
+.filename{margin-top:7px;color:var(--green);font-size:12px;font-weight:600;overflow-wrap:anywhere}
+.divider{height:1px;background:var(--line);margin:18px 0}
+.generate{width:100%;border:0;border-radius:10px;padding:14px;background:var(--green);color:white;font-weight:700;font-size:14px;box-shadow:0 5px 12px #47795c2b;transition:.2s}
+.generate:hover{background:#3c694e;transform:translateY(-1px)}
+.generate:disabled{opacity:.55;cursor:wait;transform:none}
+.privacy{display:flex;align-items:flex-start;gap:8px;color:#999;font-size:11px;line-height:1.45;margin:12px 2px 0}
+.quizpanel{min-height:550px;padding:29px}
+.empty{min-height:485px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:35px}
+.emptyart{height:100px;width:100px;border-radius:30px;background:#eff3ec;display:grid;place-items:center;font-size:45px;margin-bottom:22px;transform:rotate(-5deg)}
+.empty h2{font:700 22px Manrope,sans-serif;margin:0 0 8px}
+.empty p{color:var(--muted);max-width:330px;line-height:1.6;margin:0}
+.examplechips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:30px;padding:8px 12px;font-size:12px;color:#667068;cursor:pointer}
+.chip:hover{border-color:#96b59a;color:var(--green)}
+.quizhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.quizname{font:700 17px Manrope,sans-serif}
+.quizmeta{font-size:12px;color:var(--muted);margin-top:4px}
+.badge{padding:7px 10px;background:#edf3ed;border-radius:30px;color:var(--green);font-size:11px;font-weight:700}
+.progressrow{display:flex;align-items:center;gap:12px;margin-bottom:30px}
+.track{height:6px;background:#f0f0eb;border-radius:10px;overflow:hidden;flex:1}
+.fill{height:100%;width:0;background:var(--green);border-radius:10px;transition:width .3s}
+.progresslabel{font-size:12px;color:var(--muted);white-space:nowrap}
+.qnumber{font-size:11px;font-weight:700;color:var(--green);letter-spacing:.08em;text-transform:uppercase;margin-bottom:9px}
+.question{font:700 23px/1.4 Manrope,sans-serif;letter-spacing:-.45px;margin:0 0 22px}
+.options{display:grid;gap:11px}
+.option{width:100%;text-align:left;display:flex;align-items:center;gap:13px;border:1px solid var(--line);border-radius:12px;background:white;padding:14px 15px;color:var(--ink);transition:.16s}
+.option:hover:not(:disabled){border-color:#91b398;background:#fafcf9}
+.option.selected{border-color:var(--green);background:#f3f7f2;box-shadow:0 0 0 2px #47795c12}
+.option.correct{border-color:#71a17a;background:#eff7ef}
+.option.wrong{border-color:#de8c78;background:#fff4f0}
+.letter{width:28px;height:28px;flex:0 0 28px;border:1px solid #e4e6e0;border-radius:8px;display:grid;place-items:center;color:#7b847c;font-weight:700;font-size:12px}
+.selected .letter{background:var(--green);border-color:var(--green);color:#fff}
+.correct .letter{background:#588d62;border-color:#588d62;color:#fff}
+.wrong .letter{background:#d57860;border-color:#d57860;color:#fff}
+.optiontext{font-size:14px;line-height:1.45}
+.explanation{padding:13px 15px;margin-top:17px;border-radius:10px;background:#f3f6f1;color:#536754;font-size:13px;line-height:1.6;display:none}
+.explanation.show{display:block}
+.explanation strong{color:#304b35}
+.quizactions{display:flex;align-items:center;justify-content:space-between;margin-top:23px}
+.quiet{border:0;background:none;color:#7b837b;padding:10px 0;font-size:13px}
+.next{border:0;border-radius:9px;background:var(--green);color:#fff;padding:12px 20px;font-weight:700}
+.next:disabled{opacity:.4;cursor:not-allowed}
+.result{max-width:500px;margin:auto;text-align:center;padding:27px 10px 18px}
+.resulticon{width:95px;height:95px;background:#edf3e9;display:grid;place-items:center;border-radius:30px;font-size:43px;margin:0 auto 20px}
+.result h2{font:800 30px Manrope,sans-serif;letter-spacing:-1px;margin:0 0 8px}
+.result .lead{color:var(--muted);margin:0 auto 22px;max-width:390px;line-height:1.6}
+.scorebox{padding:20px;background:#f8f8f4;border:1px solid var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center;gap:27px;margin-bottom:22px}
+.scorebig{font:800 38px Manrope,sans-serif;color:var(--green);letter-spacing:-2px}
+.scorecaption{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.scorestat{font:700 17px Manrope,sans-serif}
+.scoreline{height:42px;width:1px;background:var(--line)}
+.resultactions{display:flex;justify-content:center;gap:10px}
+.secondary{background:white;border:1px solid var(--line);border-radius:9px;padding:11px 16px;font-weight:600;color:#59615a}
+.review{margin-top:30px;text-align:left;border-top:1px solid var(--line);padding-top:20px}
+.review h3{font:700 15px Manrope;margin:0 0 12px}
+.reviewitem{padding:12px 0;border-bottom:1px solid #f0f0eb}
+.reviewq{font-weight:600;font-size:13px;line-height:1.45}
+.reviewa{font-size:12px;color:#788078;margin-top:5px}
+.reviewa.ok{color:#4e8659}
+.reviewa.no{color:#bb604f}
+.sourcepill{font-size:11px;color:#7e877f;background:#f4f5f1;border-radius:20px;padding:6px 10px;margin-top:10px;display:inline-block}
+.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,12px);padding:11px 16px;border-radius:10px;background:#28352b;color:white;font-size:13px;opacity:0;transition:.2s;pointer-events:none;box-shadow:var(--shadow)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.hidden{display:none!important}
+@media(max-width:850px){.workspace{grid-template-columns:300px 1fr;gap:15px}.panel{padding:20px}.quizpanel{padding:23px}.shell{padding:0 22px}}
+@media(max-width:680px){.shell{padding:0 15px}.topbar{height:66px}.topright{font-size:11px}.hero{padding:32px 0 23px}.hero p{font-size:14px}.workspace{grid-template-columns:1fr}.panel{position:static}.quizpanel{min-height:420px}.empty{min-height:360px}.question{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <div class="brand"><div class="logo">✳</div>quiz<em>ly</em></div>
+  <div class="topright"><span class="dot"></span> Your personal study studio</div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">✦ &nbsp; A little practice goes a long way</div>
+  <h1>Make learning <span>stick.</span></h1>
+  <p>Turn what you're studying into a quiz made just for you.</p>
+</section>
+
+<main class="workspace">
+  <aside class="panel">
+    <h2>Create a quiz</h2>
+    <p class="sub">Start with a topic, or bring your own study notes.</p>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="topic">✦ &nbsp; A topic</button>
+      <button class="tab" data-tab="notes">▤ &nbsp; My notes</button>
+    </div>
+
+    <div id="topicmode">
+      <label class="fieldlabel" for="topicInput">What are you learning?</label>
+      <input id="topicInput" class="topicbox" placeholder="e.g. The water cycle" maxlength="90">
+      <p class="hint">Try a subject or a specific concept. We’ll make five questions to get you started.</p>
+    </div>
+
+    <div id="notesmode" class="hidden">
+      <label class="fieldlabel" for="notesInput">Paste your study notes</label>
+      <textarea class="notesbox" id="notesInput" placeholder="Paste a chapter, your class notes, or a short reading…"></textarea>
+      <p class="hint">A few paragraphs work best. We use key ideas in your material to create questions.</p>
+    </div>
+
+    <label class="drop" id="drop">
+      <input type="file" id="fileInput" accept=".txt,.md,.csv,.text" hidden>
+      <div class="uploadicon">↥</div>
+      <strong>Drop in a study file</strong>
+      <span>or click to browse · TXT, MD, CSV</span>
+      <div id="fileName" class="filename"></div>
+    </label>
+
+    <div class="divider"></div>
+    <button class="generate" id="generate">Create my quiz &nbsp; →</button>
+    <div class="privacy">♧ <span>Your notes stay in this browser. No account or API key needed.</span></div>
+  </aside>
+
+  <section class="quizpanel" id="quizpanel">
+    <div class="empty" id="empty">
+      <div class="emptyart">🪴</div>
+      <h2>A fresh start, every time.</h2>
+      <p>Choose a topic or share your notes. Your questions, answers, and little learning wins will show up here.</p>
+      <div class="examplechips">
+        <button class="chip" data-topic="The water cycle">The water cycle</button>
+        <button class="chip" data-topic="Photosynthesis">Photosynthesis</button>
+        <button class="chip" data-topic="The solar system">The solar system</button>
+      </div>
+    </div>
+    <div id="quiz" class="hidden"></div>
+  </section>
+</main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+let mode='topic',fileText='',quizData=[],answers=[],current=0,checked=false,sourceLabel='';
+
+const banks=[
+{
+  keys:['photosynthesis','plant biology','plants'],
+  title:'Photosynthesis',
+  qs:[
+    ['What is the main purpose of photosynthesis?',['To convert light energy into chemical energy','To absorb minerals from the soil','To release energy from glucose','To produce nitrogen for growth'],0,'Photosynthesis captures light energy and stores it in glucose, a usable chemical form for the plant.'],
+    ['Which gas do plants take in from the air during photosynthesis?',['Oxygen','Carbon dioxide','Nitrogen','Hydrogen'],1,'Plants absorb carbon dioxide through tiny openings in their leaves and use its carbon to build sugar.'],
+    ['Where in a plant cell does photosynthesis mainly take place?',['Mitochondria','Nucleus','Chloroplasts','Cell membrane'],2,'Chloroplasts contain chlorophyll and the machinery that captures light to drive photosynthesis.'],
+    ['What is chlorophyll’s role in photosynthesis?',['It absorbs light energy','It transports water through roots','It breaks down proteins','It stores oxygen'],0,'Chlorophyll, the green pigment in chloroplasts, absorbs light that powers the reactions.'],
+    ['Which substances are products of photosynthesis?',['Glucose and oxygen','Carbon dioxide and water','Nitrogen and glucose','Water and minerals'],0,'Using carbon dioxide and water, plants produce glucose and release oxygen as a by-product.']
+  ]
+},
+{
+  keys:['solar system','planets','space','astronomy'],
+  title:'The Solar System',
+  qs:[
+    ['Which planet is the largest in our solar system?',['Saturn','Earth','Jupiter','Neptune'],2,'Jupiter is the largest planet by both diameter and mass.'],
+    ['What force keeps planets in orbit around the Sun?',['Magnetism','Gravity','Friction','Solar wind'],1,'The Sun’s gravitational pull curves each planet’s path into an orbit.'],
+    ['Which planet is known for its prominent ring system?',['Mars','Venus','Saturn','Mercury'],2,'Saturn has a spectacular system of rings made mostly of ice and rocky particles.'],
+    ['What is the name of the path a planet follows around the Sun?',['Axis','Orbit','Eclipse','Equator'],1,'An orbit is the curved path an object follows around another object due to gravity.'],
+    ['Which planet is closest to the Sun?',['Venus','Mercury','Earth','Mars'],1,'Mercury is the innermost planet, orbiting closest to the Sun.']
+  ]
+},
+{
+  keys:['water cycle','hydrologic','hydrological'],
+  title:'The Water Cycle',
+  qs:[
+    ['What is the process called when liquid water changes into water vapor?',['Condensation','Precipitation','Evaporation','Collection'],2,'Heat energy causes liquid water to evaporate and rise as water vapor.'],
+    ['Clouds form mainly when water vapor cools and changes into tiny droplets. What is this process?',['Condensation','Transpiration','Runoff','Infiltration'],0,'As moist air cools, water vapor condenses into droplets that gather to form clouds.'],
+    ['Which term describes water falling from clouds as rain, snow, or hail?',['Evaporation','Precipitation','Condensation','Sublimation'],1,'Precipitation is water released from clouds in liquid or solid form.'],
+    ['What is the main energy source that drives the water cycle?',['The Moon','Earth’s core','The Sun','Ocean currents'],2,'Solar energy heats surface water and drives evaporation, powering much of the cycle.'],
+    ['What happens to water after it soaks into the ground?',['It becomes groundwater','It immediately evaporates','It becomes salt','It stops moving permanently'],0,'Infiltrated water can move through soil and rock, replenishing underground aquifers.']
+  ]
+},
+{
+  keys:['cell biology','cells','cell structure'],
+  title:'Cell Biology',
+  qs:[
+    ['Which cell structure contains most of a eukaryotic cell’s DNA?',['Ribosome','Nucleus','Cell wall','Golgi apparatus'],1,'The nucleus houses most of a eukaryotic cell’s genetic material.'],
+    ['Which organelle releases usable energy from food through cellular respiration?',['Chloroplast','Mitochondrion','Vacuole','Lysosome'],1,'Mitochondria convert energy stored in food into ATP through cellular respiration.'],
+    ['What is the cell membrane’s main job?',['Make proteins','Control what enters and leaves the cell','Store genetic information','Produce sunlight'],1,'The selectively permeable cell membrane regulates movement of substances in and out of a cell.'],
+    ['Which structures assemble proteins?',['Ribosomes','Vacuoles','Centrioles','Cell walls'],0,'Ribosomes read messenger RNA and join amino acids to build proteins.'],
+    ['What structure gives plant cells extra support and shape?',['Cell wall','Nucleus','Cytoplasm','Mitochondrion'],0,'A rigid cellulose cell wall surrounds a plant cell membrane, helping maintain its shape.']
+  ]
+},
+{
+  keys:['newton','forces and motion','physics','laws of motion'],
+  title:'Forces & Motion',
+  qs:[
+    ['According to Newton’s first law, an object will keep its motion unless acted on by…',['A balanced force','A net external force','Gravity alone','A change in mass'],1,'Newton’s first law says motion changes only when an unbalanced (net) external force acts.'],
+    ['What is the formula for force in Newton’s second law?',['F = m × a','F = m ÷ a','F = a ÷ m','F = m + a'],0,'Newton’s second law states that net force equals mass multiplied by acceleration.'],
+    ['What does Newton’s third law say about every action force?',['It has no effect','It has an equal and opposite reaction force','It creates acceleration only','It is always stronger than gravity'],1,'Forces come in pairs: when one object pushes another, the second pushes back equally in the opposite direction.'],
+    ['What is the SI unit of force?',['Joule','Watt','Newton','Pascal'],2,'The newton (N) is the SI unit of force, named after physicist Isaac Newton.'],
+    ['If the net force on an object is zero, its acceleration is…',['Increasing','Zero','Negative','Impossible to determine'],1,'By F = ma, zero net force produces zero acceleration; the object stays at rest or moves at constant velocity.']
+  ]
+},
+{
+  keys:['world war ii','second world war','world war 2'],
+  title:'World War II',
+  qs:[
+    ['In which year did World War II begin in Europe?',['1918','1939','1941','1945'],1,'Germany invaded Poland on 1 September 1939, prompting Britain and France to declare war.'],
+    ['Which countries made up the main Axis powers?',['Britain, France, and the US','Germany, Italy, and Japan','US, USSR, and China','Spain, Portugal, and Germany'],1,'Germany, Italy, and Japan formed the principal Axis alliance during the war.'],
+    ['Which event brought the United States into World War II?',['D-Day','The attack on Pearl Harbor','The fall of France','The Battle of Britain'],1,'Japan attacked the US naval base at Pearl Harbor on 7 December 1941; the US declared war the following day.'],
+    ['What was D-Day?',['The first atomic test','The Allied landing in Normandy','The surrender of Japan','The invasion of Poland'],1,'On 6 June 1944, Allied forces landed in Normandy in a major operation to liberate Western Europe.'],
+    ['In which year did World War II end?',['1943','1944','1945','1947'],2,'The war in Europe ended in May 1945 and Japan surrendered in September 1945.']
+  ]
+},
+{
+  keys:['fractions','fraction math','fractions and decimals'],
+  title:'Fractions',
+  qs:[
+    ['What is 1/2 + 1/4?',['2/6','3/4','1/6','2/4'],1,'Convert 1/2 to 2/4, then add: 2/4 + 1/4 = 3/4.'],
+    ['Which fraction is equivalent to 3/4?',['6/10','9/12','6/8','Both 9/12 and 6/8'],3,'Multiplying numerator and denominator by the same number gives equivalent fractions: 3/4 = 9/12 = 6/8.'],
+    ['What is 2/3 × 3/5?',['6/15','5/6','2/5','1/5'],2,'Multiply numerators and denominators, then simplify: (2 × 3)/(3 × 5) = 6/15 = 2/5.'],
+    ['Which fraction is largest?',['1/3','1/2','1/4','1/5'],1,'For unit fractions, a smaller denominator means a larger piece; 1/2 is largest here.'],
+    ['What is 3/4 written as a decimal?',['0.34','0.75','0.8','0.43'],1,'Divide 3 by 4 to get 0.75.']
+  ]
+},
+{
+  keys:['photosynthesis','biology'],
+  title:'Biology',
+  qs:[
+    ['Which molecule carries genetic instructions in most living organisms?',['DNA','Starch','Hemoglobin','Cellulose'],0,'DNA stores the hereditary instructions used in the development and functioning of living organisms.'],
+    ['What is the basic structural and functional unit of life?',['Atom','Organ','Cell','Tissue'],2,'Cells are the smallest units capable of carrying out the functions of life.'],
+    ['Which process allows organisms to pass traits to their offspring?',['Digestion','Inheritance','Respiration','Diffusion'],1,'Inheritance is the passing of genetic information from parents to offspring.'],
+    ['What do producers do in a food chain?',['Make their own food','Eat only animals','Break down rocks','Consume all other organisms'],0,'Producers, such as plants, make organic food, usually using energy from sunlight.'],
+    ['What is an ecosystem?',['A single species','A community of organisms and their environment','Only the climate of a region','The inside of a cell'],1,'An ecosystem includes interacting organisms and the physical environment they share.']
+  ]
+},
+{
+  keys:['climate change','global warming','greenhouse effect'],
+  title:'Climate Change',
+  qs:[
+    ['Which gas is a major contributor to human-caused global warming?',['Oxygen','Carbon dioxide','Helium','Neon'],1,'Burning fossil fuels and other activities increase atmospheric carbon dioxide, a heat-trapping greenhouse gas.'],
+    ['What does the greenhouse effect describe?',['Earth’s magnetic field','Atmospheric gases trapping some outgoing heat','Ocean water turning to ice','The Sun cooling over time'],1,'Greenhouse gases absorb and re-emit some infrared radiation, keeping Earth warmer than it would otherwise be.'],
+    ['Which is a renewable energy source?',['Coal','Natural gas','Solar power','Oil'],2,'Solar power is replenished continuously by sunlight and does not require extracting a finite fossil fuel.'],
+    ['What is one major role of forests in the carbon cycle?',['They release all stored carbon instantly','They absorb and store carbon dioxide','They create fossil fuels','They prevent all evaporation'],1,'Trees absorb carbon dioxide as they grow and store carbon in wood, roots, and soils.'],
+    ['Which term describes a long-term shift in average weather patterns?',['Weather','Climate change','Tides','Erosion'],1,'Climate change refers to persistent changes in temperature and typical weather patterns over long periods.']
+  ]
+}
+];
+
+function showToast(text){
+  const toast=$('#toast');
+  toast.textContent=text;
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'),2600);
+}
+
+document.querySelectorAll('.tab').forEach(button=>{
+  button.onclick=()=>{
+    mode=button.dataset.tab;
+    document.querySelectorAll('.tab').forEach(tab=>tab.classList.toggle('active',tab===button));
+    $('#topicmode').classList.toggle('hidden',mode!=='topic');
+    $('#notesmode').classList.toggle('hidden',mode!=='notes');
+  };
+});
+
+document.querySelectorAll('.chip').forEach(button=>{
+  button.onclick=()=>{
+    $('#topicInput').value=button.dataset.topic;
+    startQuiz();
+  };
+});
+
+$('#drop').onclick=event=>{
+  if(event.target.id!=='fileInput') $('#fileInput').click();
+};
+
+$('#fileInput').onchange=async event=>{
+  const file=event.target.files[0];
+  if(!file) return;
+
+  try{
+    fileText=await file.text();
+    $('#fileName').textContent='✓ '+file.name;
+    $('#notesInput').value=fileText;
+    mode='notes';
+    document.querySelectorAll('.tab').forEach(tab=>
+      tab.classList.toggle('active',tab.dataset.tab==='notes')
+    );
+    $('#topicmode').classList.add('hidden');
+    $('#notesmode').classList.remove('hidden');
+  }catch{
+    showToast('Could not read that file. Try a text or Markdown file.');
+  }
+};
+
+$('#drop').ondragover=event=>{
+  event.preventDefault();
+  $('#drop').classList.add('drag');
+};
+
+$('#drop').ondragleave=()=>{
+  $('#drop').classList.remove('drag');
+};
+
+$('#drop').ondrop=event=>{
+  event.preventDefault();
+  $('#drop').classList.remove('drag');
+
+  const file=event.dataTransfer.files[0];
+  if(file){
+    const transfer=new DataTransfer();
+    transfer.items.add(file);
+    $('#fileInput').files=transfer.files;
+    $('#fileInput').dispatchEvent(new Event('change'));
+  }
+};
+
+function escapeHTML(value){
+  return value.replace(/[&<>"']/g,char=>({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[char]));
+}
+
+function makeNotesQuiz(text){
+  const sentences=text.replace(/\s+/g,' ').match(/[^.!?]+[.!?]?/g)||[];
+  const facts=sentences
+    .map(sentence=>sentence.trim())
+    .filter(sentence=>sentence.length>35&&sentence.length<260&&/[a-zA-Z]/.test(sentence));
+
+  if(facts.length<3) return null;
+
+  const stopWords=new Set(
+    'about after again against also among because before being between could does during every from have into more most other over same some such than that their them then there these they this through under using very what when where which while with would your'.split(' ')
+  );
+
+  const candidates=[];
+
+  for(const sentence of facts){
+    const words=sentence.match(/[A-Za-z][A-Za-z'-]{4,}/g)||[];
+    const answer=words
+      .filter(word=>!stopWords.has(word.toLowerCase()))
+      .sort((a,b)=>b.length-a.length)[0];
+
+    if(answer&&!candidates.some(item=>item.answer.toLowerCase()===answer.toLowerCase())){
+      candidates.push({sentence,answer});
+    }
+  }
+
+  if(candidates.length<5) return null;
+
+  const vocabulary=[...new Set(
+    facts.join(' ').match(/[A-Za-z][A-Za-z'-]{4,}/g)||[]
+  )].filter(word=>!stopWords.has(word.toLowerCase()));
+
+  return candidates.slice(0,5).map((item,index)=>{
+    const answer=item.answer;
+    const distractors=vocabulary
+      .filter(word=>
+        word.toLowerCase()!==answer.toLowerCase() &&
+        !item.sentence.toLowerCase().includes(word.toLowerCase()) &&
+        word.length<answer.length+5
+      )
+      .sort((a,b)=>
+        Math.abs(a.length-answer.length)-Math.abs(b.length-answer.length)
+      )
+      .slice(0,3);
+
+    while(distractors.length<3){
+      distractors.push(['system','energy','process'][distractors.length]);
+    }
+
+    const options=[answer,...distractors];
+    const shift=(index*3+1)%4;
+    for(let i=0;i<shift;i++) options.push(options.shift());
+
+    const correct=options.indexOf(answer);
+    const maskedSentence=item.sentence.replace(
+      new RegExp('\\b'+answer.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i'),
+      '_____'
+    );
+
+    return [
+      `According to your notes, complete this statement: “${maskedSentence}”`,
+      options,
+      correct,
+      `Your notes state: “${item.sentence}”`
+    ];
+  });
+}
+
+function genericTopicQuiz(topic){
+  return [
+    [`Which approach is most useful when beginning to study ${topic}?`,['Identify its key concepts and how they connect','Memorize unrelated facts first','Ignore examples and evidence','Skip foundational vocabulary'],0,`Starting with core concepts and their relationships builds a useful framework for learning ${topic}.`],
+    [`When evaluating a claim about ${topic}, what should you look for?`,['Reliable evidence and clear reasoning','How often it is repeated','Whether it sounds surprising','The length of the explanation'],0,'Claims are best assessed by examining the quality of the supporting evidence and reasoning.'],
+    [`Which is the best way to check your understanding of ${topic}?`,['Explain the idea in your own words and apply it','Reread without pausing','Copy a definition without thinking','Study only the title'],0,'Explaining and applying an idea reveals whether you understand it beyond recognizing the words.'],
+    [`Why are examples useful when learning ${topic}?`,['They show how an idea works in a concrete case','They replace all concepts','They prove every claim automatically','They remove the need to practice'],0,'Examples connect abstract ideas to specific cases and help you see how concepts are used.'],
+    [`After learning a new concept in ${topic}, what is a strong next step?`,['Try a new problem or case and explain your reasoning','Stop reviewing immediately','Only memorize the page number','Avoid connecting it to earlier ideas'],0,'Applying a concept in a fresh situation is an effective way to check and strengthen learning.']
+  ];
+}
+
+function startQuiz(){
+  let data,label;
+
+  if(mode==='notes'){
+    const text=$('#notesInput').value.trim()||fileText;
+
+    if(text.length<80){
+      showToast('Add a little more study material (at least 80 characters).');
+      return;
+    }
+
+    data=makeNotesQuiz(text);
+
+    if(!data){
+      showToast('Add at least five complete sentences with distinct key terms, then try again.');
+      return;
+    }
+
+    label='Your study notes';
+    sourceLabel='Built from your notes';
+  }else{
+    label=$('#topicInput').value.trim();
+
+    if(!label){
+      showToast('Enter a topic to get started.');
+      $('#topicInput').focus();
+      return;
+    }
+
+    const bank=banks.find(bank=>
+      bank.keys.some(key=>label.toLowerCase().includes(key))
+    );
+
+    data=bank?bank.qs:genericTopicQuiz(label);
+    label=bank?bank.title:label;
+    sourceLabel=bank?'Curated topic set':'Topic study set';
+  }
+
+  quizData=data;
+  answers=Array(data.length).fill(null);
+  current=0;
+  checked=false;
+  $('#empty').classList.add('hidden');
+  $('#quiz').classList.remove('hidden');
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const question=quizData[current];
+  const percent=(current/quizData.length)*100;
+  const quizTitle=mode==='notes'
+    ? 'Your study quiz'
+    : $('#topicInput').value.trim()||'Your topic quiz';
+
+  $('#quiz').innerHTML=`
+    <div class="quizhead">
+      <div>
+        <div class="quizname">${escapeHTML(quizTitle)}</div>
+        <div class="quizmeta">A little practice, one question at a time</div>
+      </div>
+      <div class="badge">✦ &nbsp; ${escapeHTML(sourceLabel)}</div>
+    </div>
+    <div class="progressrow">
+      <div class="track"><div class="fill" style="width:${checked?((current+1)/quizData.length)*100:percent}%"></div></div>
+      <div class="progresslabel">${current+1} of ${quizData.length}</div>
+    </div>
+    <div class="qnumber">Question ${String(current+1).padStart(2,'0')}</div>
+    <h2 class="question">${escapeHTML(question[0])}</h2>
+    <div class="options">
+      ${question[1].map((option,index)=>{
+        let className='option';
+        if(answers[current]===index) className+=' selected';
+        if(checked&&index===question[2]) className+=' correct';
+        if(checked&&answers[current]===index&&index!==question[2]) className+=' wrong';
+        return `<button class="${className}" data-index="${index}" ${checked?'disabled':''}>
+          <span class="letter">${'ABCD'[index]}</span>
+          <span class="optiontext">${escapeHTML(option)}</span>
+        </button>`;
+      }).join('')}
+    </div>
+    <div class="explanation ${checked?'show':''}">
+      <strong>${answers[current]===question[2]?'That’s right!':'Here’s why'}</strong>
+      &nbsp;${escapeHTML(question[3])}
+    </div>
+    <div class="quizactions">
+      <button class="quiet" id="restart">↺ &nbsp; Start over</button>
+      <button class="next" id="next" ${!checked&&!Number.isInteger(answers[current])?'disabled':''}>
+        ${checked?(current===quizData.length-1?'See my results':'Next question →'):'Check answer'}
+      </button>
+    </div>
+  `;
+
+  document.querySelectorAll('.option').forEach(button=>{
+    button.onclick=()=>{
+      if(!checked){
+        answers[current]=Number(button.dataset.index);
+        renderQuestion();
+      }
+    };
+  });
+
+  $('#next').onclick=()=>{
+    if(!checked){
+      if(!Number.isInteger(answers[current])) return;
+      checked=true;
+      renderQuestion();
+    }else if(current<quizData.length-1){
+      current++;
+      checked=false;
+      renderQuestion();
+    }else{
+      renderResult();
+    }
+  };
+
+  $('#restart').onclick=()=>{
+    answers=Array(quizData.length).fill(null);
+    current=0;
+    checked=false;
+    renderQuestion();
+  };
+}
+
+function renderResult(){
+  const correct=answers.reduce(
+    (total,answer,index)=>total+(answer===quizData[index][2]?1:0),
+    0
+  );
+  const percent=Math.round(correct/quizData.length*100);
+
+  const [emoji,title,feedback]=percent===100
+    ? ['🏆','Brilliant work!','You got every question right. Your understanding is in great shape.']
+    : percent>=80
+      ? ['🌟','You’re on a roll!','A strong result. Review the couple of tricky ideas and you’ll have them down.']
+      : percent>=60
+        ? ['🌱','Good progress!','You’ve got the beginnings of a solid understanding. A quick review will help it grow.']
+        : percent>=40
+          ? ['💪','Keep building!','Every question gave you a clue about what to revisit. Try the quiz again after a short review.']
+          : ['🌼','A fresh place to start.','Learning takes practice. Revisit the material, then come back and see what feels easier.'];
+
+  $('#quiz').innerHTML=`
+    <div class="result">
+      <div class="resulticon">${emoji}</div>
+      <h2>${title}</h2>
+      <p class="lead">${feedback}</p>
+      <div class="scorebox">
+        <div>
+          <div class="scorebig">${percent}%</div>
+          <div class="scorecaption">Your score</div>
+        </div>
+        <div class="scoreline"></div>
+        <div>
+          <div class="scorestat">${correct} / ${quizData.length}</div>
+          <div class="scorecaption">Correct answers</div>
+        </div>
+      </div>
+      <div class="resultactions">
+        <button class="secondary" id="reviewBtn">Review answers</button>
+        <button class="next" id="again">Try again ↺</button>
+      </div>
+      <div class="review hidden" id="review">
+        <h3>Your answer review</h3>
+        ${quizData.map((question,index)=>`
+          <div class="reviewitem">
+            <div class="reviewq">${index+1}. ${escapeHTML(question[0])}</div>
+            <div class="reviewa ${answers[index]===question[2]?'ok':'no'}">
+              ${answers[index]===question[2]
+                ? '✓ Correct'
+                : '✗ Your answer: '+(answers[index]===null?'Not answered':escapeHTML(question[1][answers[index]]))}
+              · Correct answer: ${escapeHTML(question[1][question[2]])}
+            </div>
+            <div class="reviewa">${escapeHTML(question[3])}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  $('#again').onclick=()=>{
+    answers=Array(quizData.length).fill(null);
+    current=0;
+    checked=false;
+    renderQuestion();
+  };
+
+  $('#reviewBtn').onclick=()=>{
+    $('#review').classList.toggle('hidden');
+    $('#reviewBtn').textContent=
+      $('#review').classList.contains('hidden')?'Review answers':'Hide review';
+  };
+}
+
+$('#generate').onclick=startQuiz;
+$('#topicInput').addEventListener('keydown',event=>{
+  if(event.key==='Enter') startQuiz();
+});
+</script>
+</body>
+</html>
+```
